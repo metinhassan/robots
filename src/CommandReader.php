@@ -4,25 +4,34 @@
 namespace App;
 
 
-class CommandReader
+abstract class CommandReader
 {
-    private array $tempCommands;
-    private int $index = 0;
+    protected array $tempCommands;
+    protected int $index = 0;
 
-    function __construct() {
-        $this->tempCommands = [];
-        array_push($this->tempCommands, 'PLACE');
-        array_push($this->tempCommands, 'MOVE');
-        array_push($this->tempCommands, 'MOVE');
-        array_push($this->tempCommands, 'MOVE');
-        array_push($this->tempCommands, 'REPORT');
-    }
+    abstract public function getNext() : string;
 
-    public function getNext() {
-        if ($this->index >= count($this->tempCommands)) {
-            return false;
+    protected function isValidCommand(string $command) : bool {
+
+        if (in_array($command, Constants::VALID_COMMANDS) && substr($command, 0, 5) !== Constants::VALID_COMMANDS[Constants::PLACE]) {
+            return true;
         }
 
-        return $this->tempCommands[$this->index++];
+        if (substr($command, 0, strlen(Constants::VALID_COMMANDS[Constants::PLACE])) === Constants::VALID_COMMANDS[Constants::PLACE]) {
+            $coordsFacing = str_replace(Constants::VALID_COMMANDS[Constants::PLACE], "", $command);
+            $coordsFacing = str_replace(" ", "", $coordsFacing);
+            $coordsFacingArray = explode(',', $coordsFacing);
+
+            if (!ctype_digit($coordsFacingArray[0]) || !ctype_digit($coordsFacingArray[1])) {
+                return false;
+            }
+            if (!in_array($coordsFacingArray[2], Constants::VALID_DIRECTIONS)) {
+                return false;
+            }
+
+            return true;
+        }
+
+        return false;
     }
 }

@@ -3,7 +3,6 @@
 
 namespace App;
 
-
 class Simulation
 {
     private Robot $robot;
@@ -18,7 +17,7 @@ class Simulation
 
     public function run() {
         while($command = $this->commandReader->getNext()) {
-            echo $command;
+            echo "COMMAND: " . $command. "\n";
         }
     }
 }
