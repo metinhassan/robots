@@ -28,6 +28,8 @@ class RobotTest extends TestCase
         $this->assertEquals("0,0,EAST", $robot->report());
         $robot->place(5,5, "EAST");
         $this->assertEquals("5,5,EAST", $robot->report());
+        $robot->place(-1,5, "EAST");
+        $this->assertEquals("5,5,EAST", $robot->report());
     }
 
     public function testRobotSpinningLeftRight() {
@@ -48,6 +50,17 @@ class RobotTest extends TestCase
         $robot->issueCommand("RIGHT");
         $this->assertEquals("3,3,WEST", $robot->report());
         $robot->issueCommand("RIGHT");
+        $this->assertEquals("3,3,NORTH", $robot->report());
+    }
+
+    public function testRobotAllMoves() {
+        $robot = new Robot(new Table(5,5));
+        //$robot->place(1,2, "EAST");
+        $robot->issueCommand("PLACE 1,2,EAST");
+        $robot->issueCommand("MOVE");
+        $robot->issueCommand("MOVE");
+        $robot->issueCommand("LEFT");
+        $robot->issueCommand("MOVE");
         $this->assertEquals("3,3,NORTH", $robot->report());
     }
 }
