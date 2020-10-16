@@ -31,6 +31,7 @@ This application developed and tested in the following environment:
 * Linux Mint 19.3
 * composer 1.6.3
 
+## Installation
 ```shell script
 git clone git@github.com:metinhassan/robots.git robots
 cd robots
