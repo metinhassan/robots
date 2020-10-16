@@ -38,17 +38,15 @@ class Robot
         }
     }
 
-    public function setDirection(string $direction): void
-    {
+    public function setDirection(string $direction): void {
         $this->direction = $direction;
     }
 
-    public function isPlaced()
-    {
+    public function isPlaced() : bool {
         return $this->isPlaced;
     }
 
-    private function isWithinBounds(int $coordX, int $coordY) {
+    private function isWithinBounds(int $coordX, int $coordY) : bool {
         return $coordX <= $this->table->getWidth() && $coordY <= $this->table->getHeight();
     }
 
@@ -58,7 +56,7 @@ class Robot
         }
     }
 
-    private function changeDirection(string $turnTowards) {
+    private function changeDirection(string $turnTowards) : void {
         $directions = array(
             Constants::VALID_DIRECTIONS[Constants::NORTH],
             Constants::VALID_DIRECTIONS[Constants::EAST],
@@ -70,7 +68,7 @@ class Robot
         if ($turnTowards === Constants::VALID_COMMANDS[Constants::LEFT]) {
             $this->direction = $directions[abs($currentKey+3) % 4];
         } else if ($turnTowards === Constants::VALID_COMMANDS[Constants::RIGHT]) {
-            $this->direction = $directions[abs($currentKey+5) % 4];
+            $this->direction = $directions[($currentKey+1) % 4];
         }
     }
 }
