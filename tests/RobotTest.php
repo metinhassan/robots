@@ -11,6 +11,7 @@ use PHPUnit\Framework\TestCase;
 class RobotTest extends TestCase
 {
     public function testPlaceRobot() {
+        // Test various placements of robot
         $robot = new Robot(new Table(5,5));
         $this->assertFalse($robot->isPlaced());
         $robot->place(3,3, "NORTH");
@@ -32,7 +33,7 @@ class RobotTest extends TestCase
         $this->assertEquals("5,5,EAST", $robot->report());
     }
 
-    public function testRobotSpinningLeftRight() {
+    public function testSpinningLeftRight() {
         $robot = new Robot(new Table(5,5));
         $robot->place(3,3, "NORTH");
         $robot->issueCommand("LEFT");
@@ -53,14 +54,37 @@ class RobotTest extends TestCase
         $this->assertEquals("3,3,NORTH", $robot->report());
     }
 
-    public function testRobotAllMoves() {
+    public function testAllMoves() {
         $robot = new Robot(new Table(5,5));
-        //$robot->place(1,2, "EAST");
+
+        //Test some movies
         $robot->issueCommand("PLACE 1,2,EAST");
         $robot->issueCommand("MOVE");
         $robot->issueCommand("MOVE");
         $robot->issueCommand("LEFT");
         $robot->issueCommand("MOVE");
         $this->assertEquals("3,3,NORTH", $robot->report());
+
+        $robot->issueCommand("PLACE 1,5,EAST");
+        $this->assertEquals("1,5,EAST", $robot->report());
+
+        //Test some boundaries
+        $robot->issueCommand("RIGHT");
+        $robot->issueCommand("MOVE");
+        $robot->issueCommand("MOVE");
+        $robot->issueCommand("MOVE");
+        $robot->issueCommand("MOVE");
+        $this->assertEquals("1,1,SOUTH", $robot->report());
+
+        $robot->issueCommand("MOVE");
+        $this->assertEquals("1,0,SOUTH", $robot->report());
+        $robot->issueCommand("MOVE");
+        $this->assertEquals("1,0,SOUTH", $robot->report());
+
+        $robot->issueCommand("RIGHT");
+        $robot->issueCommand("MOVE");
+        $this->assertEquals("0,0,WEST", $robot->report());
+        $robot->issueCommand("MOVE");
+        $this->assertEquals("0,0,WEST", $robot->report());
     }
 }

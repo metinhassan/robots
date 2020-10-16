@@ -19,7 +19,8 @@ class CommandFileReaderTest extends TestCase
         $directory = [
             "mocks" => [
                 "mockfile.in" => "mockfile",
-                "validfile.in" => "MOVE\nLEFT\nmOvE\nRIGHT"
+                "validfile.in" => "MOVE\nLEFT\nmOvE\nRIGHT",
+                "invalidfile.in" => "MOVE\nLEFT\nmOvE\nASDF"
             ]
         ];
 
@@ -40,12 +41,21 @@ class CommandFileReaderTest extends TestCase
         $this->assertFalse($commandReader->isValidCommand("ASDFrge"));
     }
 
-    public function testCommandSequence() {
+    public function testValidCommandSequence() {
         $commandReader = new CommandFileReader($this->file_system->url()."/mocks/validfile.in");
 
         $this->assertEquals("MOVE", $commandReader->getNext());
         $this->assertEquals("LEFT", $commandReader->getNext());
         $this->assertEquals("MOVE", $commandReader->getNext());
         $this->assertEquals("RIGHT", $commandReader->getNext());
+    }
+
+    public function testInvalidCommandSequence() {
+        $commandReader = new CommandFileReader($this->file_system->url()."/mocks/invalidfile.in");
+
+        $this->assertEquals("MOVE", $commandReader->getNext());
+        $this->assertEquals("LEFT", $commandReader->getNext());
+        $this->assertEquals("MOVE", $commandReader->getNext());
+        $this->assertEquals("INVALID", $commandReader->getNext());
     }
 }
