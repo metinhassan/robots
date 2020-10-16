@@ -34,7 +34,7 @@ class CommandFileReaderTest extends TestCase
         $this->assertTrue($commandReader->isValidCommand("RIGHT"));
         $this->assertTrue($commandReader->isValidCommand("REPORT"));
         $this->assertTrue($commandReader->isValidCommand("PLACE 1,2,NORTH"));
-        $this->assertTrue($commandReader->isValidCommand("INVALID"));
+        $this->assertFalse($commandReader->isValidCommand("INVALID"));
         $this->assertFalse($commandReader->isValidCommand("PLACE 1,2,NOTVALIDDIRECTION"));
         $this->assertFalse($commandReader->isValidCommand("PLACE 1,X,EAST"));
         $this->assertFalse($commandReader->isValidCommand("ASDFrge"));

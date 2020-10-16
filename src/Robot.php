@@ -25,7 +25,7 @@ class Robot
 
     public function issueCommand(string $command) : void {
         if ($this->isPlaced) {
-            $this->executeCommand();
+            $this->executeCommand($command);
         }
     }
 
@@ -36,11 +36,6 @@ class Robot
             $this->direction = $direction;
             $this->isPlaced = true;
         }
-    }
-
-    public function getDirection(): string
-    {
-        return $this->direction;
     }
 
     public function setDirection(string $direction): void
@@ -57,8 +52,25 @@ class Robot
         return $coordX <= $this->table->getWidth() && $coordY <= $this->table->getHeight();
     }
 
-    private function executeCommand() : void {
-
+    private function executeCommand(string $command) : void {
+        if ($command === Constants::VALID_COMMANDS[Constants::LEFT] || $command === Constants::VALID_COMMANDS[Constants::RIGHT]) {
+            $this->changeDirection($command);
+        }
     }
 
+    private function changeDirection(string $turnTowards) {
+        $directions = array(
+            Constants::VALID_DIRECTIONS[Constants::NORTH],
+            Constants::VALID_DIRECTIONS[Constants::EAST],
+            Constants::VALID_DIRECTIONS[Constants::SOUTH],
+            Constants::VALID_DIRECTIONS[Constants::WEST]
+        );
+
+        $currentKey = array_search($this->direction, $directions);
+        if ($turnTowards === Constants::VALID_COMMANDS[Constants::LEFT]) {
+            $this->direction = $directions[abs($currentKey+3) % 4];
+        } else if ($turnTowards === Constants::VALID_COMMANDS[Constants::RIGHT]) {
+            $this->direction = $directions[abs($currentKey+5) % 4];
+        }
+    }
 }

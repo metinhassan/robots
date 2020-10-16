@@ -15,7 +15,7 @@ class Simulation
 
     public function run() {
         while($command = $this->commandReader->getNext()) {
-            echo "COMMAND: " . $command. "\n";
+            $this->robot->issueCommand($command);
         }
     }
 }

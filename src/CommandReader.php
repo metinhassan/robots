@@ -10,6 +10,10 @@ abstract class CommandReader
 
     public function isValidCommand(string $command) : bool {
 
+        if ($command === Constants::VALID_COMMANDS[Constants::INVALID]) {
+            return false;
+        }
+
         if (in_array($command, Constants::VALID_COMMANDS) && substr($command, 0, 5) !== Constants::VALID_COMMANDS[Constants::PLACE]) {
             return true;
         }
