@@ -7,7 +7,9 @@ use Symfony\Component\Console\Application;
 
 $application = new Application();
 
-$application->add(new RobotApp());
+$command = new RobotApp();
+$application->add($command);
+$application->setDefaultCommand($command->getName());
 
 try {
     $application->run();
