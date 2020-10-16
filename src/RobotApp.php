@@ -23,7 +23,9 @@ class RobotApp extends Command
     {
         $filePath = "testfile.in";
         $commandReader = new CommandFileReader($filePath);
-        $sim = new Simulation(new Robot(1, 1, 'NORTH'), new Table(5, 5), $commandReader);
+        $table = new Table(5, 5);
+        $robot = new Robot($table);
+        $sim = new Simulation($robot, $commandReader);
         $sim->run();
         return 0;
     }

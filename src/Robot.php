@@ -9,58 +9,56 @@ class Robot
     private int $locX;
     private int $locY;
     private string $direction;
+    private bool $isPlaced;
+    private Table $table;
 
-    function __construct($locX, $locY, $direction) {
-        $this->locX = $locX;
-        $this->locY = $locY;
-        $this->direction = $direction;
-    }
 
-    /**
-     * @return int
-     */
-    public function getLocX(): int
+    function __construct($table)
     {
-        return $this->locX;
+        $this->table = $table;
+        $this->isPlaced = false;
     }
 
-    /**
-     * @param int $locX
-     */
-    public function setLocX(int $locX): void
-    {
-        $this->locX = $locX;
+    public function report() : string {
+        return $this->locX . "," . $this->locY . "," . $this->direction;
     }
 
-    /**
-     * @return int
-     */
-    public function getLocY(): int
-    {
-        return $this->locY;
+    public function issueCommand(string $command) : void {
+        if ($this->isPlaced) {
+            $this->executeCommand();
+        }
     }
 
-    /**
-     * @param int $locY
-     */
-    public function setLocY(int $locY): void
-    {
-        $this->locY = $locY;
+    public function place($locX, $locY, $direction) : void {
+        if ($this->isWithinBounds($locX, $locY)) {
+            $this->locX = $locX;
+            $this->locY = $locY;
+            $this->direction = $direction;
+            $this->isPlaced = true;
+        }
     }
 
-    /**
-     * @return string
-     */
     public function getDirection(): string
     {
         return $this->direction;
     }
 
-    /**
-     * @param string $direction
-     */
     public function setDirection(string $direction): void
     {
         $this->direction = $direction;
     }
+
+    public function isPlaced()
+    {
+        return $this->isPlaced;
+    }
+
+    private function isWithinBounds(int $coordX, int $coordY) {
+        return $coordX <= $this->table->getWidth() && $coordY <= $this->table->getHeight();
+    }
+
+    private function executeCommand() : void {
+
+    }
+
 }

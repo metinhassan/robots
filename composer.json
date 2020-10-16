@@ -8,6 +8,7 @@
         }
     },
     "require-dev": {
-        "symfony/phpunit-bridge": "^5.1"
+        "symfony/phpunit-bridge": "^5.1",
+        "mikey179/vfsstream": "^1.6.8"
     }
 }

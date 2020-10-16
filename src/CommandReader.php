@@ -6,12 +6,9 @@ namespace App;
 
 abstract class CommandReader
 {
-    protected array $tempCommands;
-    protected int $index = 0;
-
     abstract public function getNext() : string;
 
-    protected function isValidCommand(string $command) : bool {
+    public function isValidCommand(string $command) : bool {
 
         if (in_array($command, Constants::VALID_COMMANDS) && substr($command, 0, 5) !== Constants::VALID_COMMANDS[Constants::PLACE]) {
             return true;

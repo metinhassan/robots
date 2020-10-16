@@ -13,4 +13,12 @@ class Table
         $this->height = $height;
         $this->width = $width;
     }
+
+    public function getHeight() : int {
+        return $this->height;
+    }
+
+    public function getWidth() : int {
+        return $this->width;
+    }
 }
